@@ -2,5 +2,12 @@
     "manifest_version": 3,
     "name": "github-comment-enhancer",
     "version": "1.0.0",
-    "action": {}
+    "action": {},
+    "permissions": ["storage"],
+    "content_scripts": [
+        {
+            "js": ["src/content/index.ts"],
+            "matches": ["https://*/*/*/issues/*"]
+        }
+    ]
 }
