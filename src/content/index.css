@@ -1,0 +1,15 @@
+.popupWrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    max-width: 1280px;
+    max-height: 80%;
+    padding: 10px;
+    padding-left: 70px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 1000;
+    overflow-y: auto;
+    border-radius: 20px;
+}
