@@ -1,9 +1,11 @@
 import { getPageData } from "../../common/storage";
 import commentStar from "../components/CommentStar";
 
-export default async function initComment() {
+export default async function initComment(commentProp?: NodeListOf<HTMLDivElement>) {
     const pageData = await getPageData();
-    const comments = document.querySelectorAll(".js-timeline-item") as NodeListOf<HTMLDivElement>;
+    const comments = commentProp
+        ? commentProp
+        : (document.querySelectorAll(".js-timeline-item") as NodeListOf<HTMLDivElement>);
 
     comments.forEach((item) => {
         const header = item.querySelector(".timeline-comment-header");

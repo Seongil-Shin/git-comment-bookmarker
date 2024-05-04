@@ -1,5 +1,4 @@
 import { getPageData } from "../../common/storage";
-import { getLocalStorage } from "../../common/utils";
 
 export default async function bookmarkComment() {
     document.body.style.overflow = "hidden";
