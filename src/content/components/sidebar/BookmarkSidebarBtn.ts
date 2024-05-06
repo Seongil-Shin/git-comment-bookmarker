@@ -1,5 +1,5 @@
-import { fillStar } from "../../common/elements";
-import bookmarkComment from "./BookmarkComment";
+import { fillStar } from "../../../common/elements";
+import BookmarkCommentPopup from "../popup/BookmarkCommentPopup";
 
 export default function bookmarkSidebarBtn() {
     const bookmarkPopupBtnDiv = document.createElement("div");
@@ -15,11 +15,7 @@ export default function bookmarkSidebarBtn() {
     bookmarkPopupBtn.appendChild(text);
 
     bookmarkPopupBtnDiv.appendChild(bookmarkPopupBtn);
-    bookmarkPopupBtnDiv.addEventListener("click", handleClickBtn);
+    bookmarkPopupBtnDiv.addEventListener("click", BookmarkCommentPopup);
 
     return bookmarkPopupBtnDiv;
-}
-
-function handleClickBtn() {
-    bookmarkComment();
 }

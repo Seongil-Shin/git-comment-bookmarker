@@ -1,8 +1,9 @@
-import { getPageData } from "../../common/storage";
+import { BOOKMARK_POPUP_ID } from "../../../common/constants";
+import { getPageData } from "../../../common/storage";
 
 let everyHideComment: HTMLDivElement[] = [];
 
-export default async function bookmarkComment() {
+export default async function BookmarkCommentPopup() {
     document.body.style.overflow = "hidden";
 
     document.body.appendChild(dimmed());
@@ -13,13 +14,12 @@ export default async function bookmarkComment() {
 
 function dimmed() {
     const dimmed = document.createElement("div");
-    dimmed.id = "git-comment-enhancer-dimmed";
     dimmed.classList.add("Overlay-backdrop--center");
 
     dimmed.addEventListener("click", () => {
         document.body.style.overflow = "auto";
         dimmed.remove();
-        document.getElementById("git-comment-enhancer-popup")?.remove();
+        document.getElementById(BOOKMARK_POPUP_ID)?.remove();
     });
 
     return dimmed;
@@ -27,7 +27,7 @@ function dimmed() {
 
 async function popup() {
     const popup = document.createElement("div");
-    popup.id = "git-comment-enhancer-popup";
+    popup.id = BOOKMARK_POPUP_ID;
     popup.classList.add("popupWrapper");
 
     const pageData = await getPageData();
@@ -46,13 +46,13 @@ async function popup() {
     });
 
     if (shouldLoadMoreComment) {
-        fetchAdditionalComment();
+        appendHideComment();
     }
 
     return popup;
 }
 
-async function fetchAdditionalComment() {
+async function appendHideComment() {
     const pageData = await getPageData();
     const firstLoadBtn = document.querySelector<HTMLFormElement>("#js-progressive-timeline-item-container > form");
     if (firstLoadBtn === null) {
@@ -61,7 +61,7 @@ async function fetchAdditionalComment() {
 
     everyHideComment = everyHideComment.length > 0 ? everyHideComment : await loadMoreComment(firstLoadBtn.action);
 
-    const popup = document.getElementById("git-comment-enhancer-popup");
+    const popup = document.getElementById(BOOKMARK_POPUP_ID);
     if (popup === null) {
         return;
     }
@@ -86,7 +86,6 @@ async function fetchAdditionalComment() {
 }
 
 function loadMoreComment(action: string): Promise<HTMLDivElement[]> {
-    console.log("load more comment");
     return fetch(action)
         .then((res) => {
             return res.text();
@@ -108,8 +107,5 @@ function loadMoreComment(action: string): Promise<HTMLDivElement[]> {
 
             return comments.concat(newComments).flat(2);
         })
-        .then((value) => value)
-        .catch(() => {
-            return [] as HTMLDivElement[];
-        });
+        .catch(() => []);
 }

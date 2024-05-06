@@ -9,6 +9,7 @@ export default async function initComment(commentProp?: NodeListOf<HTMLDivElemen
 
     comments.forEach((item) => {
         const header = item.querySelector(".timeline-comment-header");
+
         if (!header || !item.dataset.gid) {
             return;
         }

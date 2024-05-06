@@ -4,12 +4,14 @@ import { getLocalStorage, saveLocalStorage } from "./utils";
 
 export async function getPageData() {
     const value = await getLocalStorage(location.href);
-    let pageData = value[location.href];
+    let pageData = null;
     if (value[location.href] === undefined) {
         pageData = {
             [STORAGE_KEY.BOOKMARK]: [],
             [STORAGE_KEY.MEMO]: "",
         };
+    } else {
+        pageData = value[location.href];
     }
 
     return pageData as IPageData;
