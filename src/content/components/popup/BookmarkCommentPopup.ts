@@ -1,5 +1,6 @@
 import { BOOKMARK_POPUP_ID } from "../../../common/constants";
 import { getPageData } from "../../../common/storage";
+import commentStar, { handleStarClick } from "../CommentStar";
 
 let everyHideComment: HTMLDivElement[] = [];
 
@@ -45,6 +46,10 @@ async function popup() {
         popup.appendChild(copiedComment);
     });
 
+    // add event on stars
+    const stars = popup.querySelectorAll<HTMLDivElement>("#star");
+    stars.forEach((star) => star.addEventListener("click", handleStarClick));
+
     if (shouldLoadMoreComment) {
         appendHideComment();
     }
@@ -60,6 +65,15 @@ async function appendHideComment() {
     }
 
     everyHideComment = everyHideComment.length > 0 ? everyHideComment : await loadMoreComment(firstLoadBtn.action);
+    everyHideComment = everyHideComment.filter((comment) => {
+        const header = comment.querySelector(".timeline-comment-header");
+
+        if (!header || !comment.dataset.gid) {
+            return;
+        }
+
+        return Boolean(pageData?.BOOKMARK.includes(comment.dataset.gid));
+    });
 
     const popup = document.getElementById(BOOKMARK_POPUP_ID);
     if (popup === null) {
@@ -77,6 +91,10 @@ async function appendHideComment() {
         }
 
         const copiedComment = markedComment.cloneNode(true) as HTMLDivElement;
+
+        const header = copiedComment.querySelector(".timeline-comment-header");
+        header?.insertBefore(commentStar(true), header.lastElementChild);
+
         newComments.push(copiedComment);
     });
 

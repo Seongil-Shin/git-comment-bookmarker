@@ -10,7 +10,7 @@ export default function commentStar(hasMarked: boolean) {
     return star;
 }
 
-async function handleStarClick(e: MouseEvent) {
+export async function handleStarClick(e: MouseEvent) {
     const star = e.target as HTMLDivElement;
     const comment: HTMLDivElement | null = star.closest(".js-timeline-item");
     const pageData = await getPageData();
