@@ -3,7 +3,7 @@
     "name": "github-comment-bookmarker",
     "version": "1.0.0",
     "action": {},
-    "permissions": ["storage"],
+    "permissions": ["storage", "unlimitedStorage"],
     "content_scripts": [
         {
             "js": ["src/content/index.ts"],
