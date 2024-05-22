@@ -1,20 +1,20 @@
-import { BOOKMARK_POPUP_ID } from "../../../common/constants";
+import { BOOKMARK_POPUP_ID, BOOKMARK_STAR_ID, DIMMED_ID } from "../../../common/constants";
 import { getPageData } from "../../../common/storage";
 import commentStar, { handleStarClick } from "../CommentStar";
 
 let everyHideComment: HTMLDivElement[] = [];
 
 export default async function BookmarkCommentPopup() {
-    document.body.style.overflow = "hidden";
-
-    document.body.appendChild(dimmed());
-
     const elem = await popup();
+
+    document.body.style.overflow = "hidden";
+    document.body.appendChild(dimmed());
     document.body.appendChild(elem);
 }
 
 function dimmed() {
     const dimmed = document.createElement("div");
+    dimmed.id = DIMMED_ID;
     dimmed.classList.add("Overlay-backdrop--center");
 
     dimmed.addEventListener("click", () => {
@@ -32,6 +32,11 @@ async function popup() {
     popup.classList.add("popupWrapper");
 
     const pageData = await getPageData();
+    if (pageData.BOOKMARK.length === 0) {
+        popup.innerText = "No bookmark comment";
+        return popup;
+    }
+
     let shouldLoadMoreComment = false;
     pageData.BOOKMARK.forEach((bookmark: string) => {
         const markedComment = document.querySelector(`div[data-gid='${bookmark}']`);
@@ -47,7 +52,7 @@ async function popup() {
     });
 
     // add event on stars
-    const stars = popup.querySelectorAll<HTMLDivElement>("#star");
+    const stars = popup.querySelectorAll<HTMLDivElement>(`#${BOOKMARK_STAR_ID}`);
     stars.forEach((star) => star.addEventListener("click", handleStarClick));
 
     if (shouldLoadMoreComment) {

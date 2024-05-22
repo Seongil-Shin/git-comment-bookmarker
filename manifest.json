@@ -1,7 +1,11 @@
 {
     "manifest_version": 3,
-    "name": "github-comment-bookmarker",
-    "version": "1.0.0",
+    "name": "github comment bookmarker",
+    "description": "A bookmark tool for GitHub issue comments, compatible with Enterprise. It's secure as it only stores the pathname and comment ID.",
+    "version": "1.0.2",
+    "icons": {
+        "128": "src/logo-128.png"
+    },
     "action": {},
     "permissions": ["storage", "unlimitedStorage"],
     "content_scripts": [

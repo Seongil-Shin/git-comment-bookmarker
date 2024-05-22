@@ -6,7 +6,10 @@ export default function initMenu() {
         return false;
     }
 
-    sideBar.insertBefore(bookmarkSidebarBtn(), sideBar.lastChild);
+    const sideBarBtn = bookmarkSidebarBtn();
+    if (sideBarBtn !== null) {
+        sideBar.insertBefore(sideBarBtn, sideBar.lastChild);
+    }
     // sideBar.insertBefore(memoSidebarBtn(), sideBar.lastChild);
 
     return true;
